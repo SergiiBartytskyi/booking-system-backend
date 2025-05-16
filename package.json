@@ -1,0 +1,39 @@
+{
+  "name": "booking-system-backend",
+  "version": "1.0.0",
+  "description": "booking system backend",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint src/**/*.js",
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SergiiBartytskyi/booking-system-backend.git"
+  },
+  "keywords": [],
+  "author": "Sergii Bartytskyi <s.bartycjkyj@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SergiiBartytskyi/booking-system-backend/issues"
+  },
+  "homepage": "https://github.com/SergiiBartytskyi/booking-system-backend#readme",
+  "devDependencies": {
+    "@eslint/js": "^9.26.0",
+    "eslint": "^9.26.0",
+    "globals": "^16.1.0",
+    "nodemon": "^3.1.10"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "http-errors": "^2.0.0",
+    "joi": "^17.13.3",
+    "mongoose": "^8.14.3"
+  }
+}

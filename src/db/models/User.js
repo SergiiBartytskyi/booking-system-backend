@@ -1,5 +1,7 @@
 import { Schema, model } from 'mongoose';
 import { ROLES } from '../../constants/index.js';
+import { handleSaveError, setUpdateSettings } from './hooks.js';
+
 const userSchema = new Schema(
   {
     name: {
@@ -21,6 +23,7 @@ const userSchema = new Schema(
       type: String,
       enum: [ROLES.CLIENT, ROLES.BUSINESS],
       default: ROLES.CLIENT,
+      required: true,
     },
   },
   {
@@ -28,5 +31,17 @@ const userSchema = new Schema(
     versionKey: false,
   },
 );
+
+userSchema.post('save', handleSaveError);
+
+userSchema.pre('findOneAndUpdate', setUpdateSettings);
+
+userSchema.post('findOneAndUpdate', handleSaveError);
+
+userSchema.methods.toJSON = function () {
+  const obj = this.toObject();
+  delete obj.password;
+  return obj;
+};
 
 export const UsersCollection = model('users', userSchema);

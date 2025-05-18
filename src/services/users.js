@@ -1,7 +1,7 @@
 import { UsersCollection } from '../db/models/User.js';
 
 export const getAllUsers = async () => {
-  const users = await UsersCollection.find();
+  const users = await UsersCollection.find({});
   return users;
 };
 

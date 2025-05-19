@@ -10,11 +10,6 @@ export const getUserById = async (id) => {
   return user;
 };
 
-export const createUser = async (payload) => {
-  const newUser = await UsersCollection.create(payload);
-  return newUser;
-};
-
 export const deleteUser = async (id) => {
   const user = await UsersCollection.findOneAndDelete({ _id: id });
   return user;

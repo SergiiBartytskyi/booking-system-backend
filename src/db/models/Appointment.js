@@ -1,5 +1,6 @@
 import { Schema, model } from 'mongoose';
 import { STATUS } from '../../constants/index.js';
+import { handleSaveError, setUpdateSettings } from './hooks.js';
 
 const appointmentSchema = new Schema(
   {
@@ -28,5 +29,11 @@ const appointmentSchema = new Schema(
     versionKey: false,
   },
 );
+
+appointmentSchema.post('save', handleSaveError);
+
+appointmentSchema.pre('findOneAndUpdate', setUpdateSettings);
+
+appointmentSchema.post('findOneAndUpdate', handleSaveError);
 
 export const AppointmentsCollection = model('appointments', appointmentSchema);

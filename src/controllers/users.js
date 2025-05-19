@@ -26,29 +26,6 @@ export const getUserByIdController = async (req, res, next) => {
   });
 };
 
-export const createUserController = async (req, res, next) => {
-  const { name, email, password, role } = req.body;
-
-  if (!name || !email || !password || !role) {
-    return next(
-      createHttpError(400, 'Required fields: name, email, password, role'),
-    );
-  }
-
-  const newUser = await usersServices.createUser({
-    name,
-    email,
-    password,
-    role,
-  });
-
-  res.status(201).json({
-    status: 201,
-    message: 'Successfully created a user!',
-    data: newUser,
-  });
-};
-
 export const deleteUserController = async (req, res, next) => {
   const { id } = req.params;
 

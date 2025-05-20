@@ -1,12 +1,18 @@
+import { ROLES } from '../constants/index.js';
 import { UsersCollection } from '../db/models/User.js';
 
-export const getAllUsers = async () => {
-  const users = await UsersCollection.find({});
+export const getBusinessUsers = async () => {
+  const users = await UsersCollection.find({})
+    .where('role')
+    .equals(ROLES.BUSINESS);
   return users;
 };
 
 export const getUserById = async (id) => {
-  const user = await UsersCollection.findById(id);
+  const user = await UsersCollection.findOne({
+    _id: id,
+    role: ROLES.BUSINESS,
+  });
   return user;
 };
 

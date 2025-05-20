@@ -1,12 +1,23 @@
 import createHttpError from 'http-errors';
 import * as usersServices from '../services/users.js';
+import { ROLES } from '../constants/index.js';
 
-export const getUsersController = async (req, res) => {
-  const users = await usersServices.getAllUsers();
+export const getUsersController = async (req, res, next) => {
+  const user = req.user;
+  const isClient = user.role === ROLES.CLIENT;
+  if (!isClient) {
+    return next(
+      createHttpError(
+        403,
+        'Access denied. You do not have permission to access this resource.!',
+      ),
+    );
+  }
+  const users = await usersServices.getBusinessUsers();
 
   res.json({
     status: 200,
-    message: 'Successfully found users!',
+    message: 'Successfully found business users!',
     data: users,
   });
 };
@@ -29,6 +40,12 @@ export const getUserByIdController = async (req, res, next) => {
 export const deleteUserController = async (req, res, next) => {
   const { id } = req.params;
 
+  const userId = req.user._id.toString();
+
+  if (userId !== id) {
+    return next(createHttpError(403, 'Access denied'));
+  }
+
   const user = await usersServices.deleteUser(id);
 
   if (!user) {
@@ -40,6 +57,12 @@ export const deleteUserController = async (req, res, next) => {
 
 export const upsertUserController = async (req, res, next) => {
   const { id } = req.params;
+
+  const userId = req.user._id.toString();
+
+  if (userId !== id) {
+    return next(createHttpError(403, 'Access denied'));
+  }
 
   const result = await usersServices.updateUser(id, req.body, {
     upsert: true,
@@ -60,6 +83,12 @@ export const upsertUserController = async (req, res, next) => {
 
 export const patchUserController = async (req, res, next) => {
   const { id } = req.params;
+
+  const userId = req.user._id.toString();
+
+  if (userId !== id) {
+    return next(createHttpError(403, 'Access denied'));
+  }
 
   const result = await usersServices.updateUser(id, req.body);
 

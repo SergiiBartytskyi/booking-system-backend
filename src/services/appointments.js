@@ -1,13 +1,18 @@
 import { AppointmentsCollection } from '../db/models/Appointment.js';
 
+export const getAppointments = async (userId) => {
+  const appointments = await AppointmentsCollection.find({ clientId: userId });
+  return appointments;
+};
+
 export const createAppointment = async (payload) => {
   const newAppointment = await AppointmentsCollection.create(payload);
   return newAppointment;
 };
 
-export const updateAppointment = async (appointmentId, payload) => {
+export const updateAppointment = async (appointmentId, clientId, payload) => {
   const editAppointment = await AppointmentsCollection.findOneAndUpdate(
-    { _id: appointmentId },
+    { _id: appointmentId, clientId },
     payload,
     { new: true },
   );
@@ -16,7 +21,7 @@ export const updateAppointment = async (appointmentId, payload) => {
 };
 
 export const deleteAppointment = async (appointmentId, clientId) => {
-  const appointment = await AppointmentsCollection.findByIdAndDelete({
+  const appointment = await AppointmentsCollection.findOneAndDelete({
     _id: appointmentId,
     clientId,
   });

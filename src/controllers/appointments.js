@@ -2,6 +2,18 @@ import createHttpError from 'http-errors';
 import * as appointmentsServices from '../services/appointments.js';
 import { ROLES, STATUS } from '../constants/index.js';
 
+export const getAppointmentsController = async (req, res) => {
+  const userId = req.user._id.toString();
+
+  const appointments = await appointmentsServices.getAppointments(userId);
+
+  res.json({
+    status: 200,
+    message: 'Successfully found user appointments!',
+    data: appointments,
+  });
+};
+
 export const createAppointmentController = async (req, res, next) => {
   const clientId = req.user._id.toString();
   const { id: businessId } = req.params;
@@ -36,6 +48,7 @@ export const createAppointmentController = async (req, res, next) => {
 };
 
 export const editAppointmentController = async (req, res, next) => {
+  const clientId = req.user._id.toString();
   const { id: appointmentId } = req.params;
   const { status, dateTime } = req.body;
 
@@ -76,6 +89,7 @@ export const editAppointmentController = async (req, res, next) => {
 
   const updatedAppointment = await appointmentsServices.updateAppointment(
     appointmentId,
+    clientId,
     updatePayload,
   );
 

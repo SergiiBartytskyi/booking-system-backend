@@ -6,14 +6,16 @@ import {
   createAppointmentController,
   deleteAppointmentController,
   editAppointmentController,
+  getAppointmentsController,
 } from '../controllers/appointments.js';
 
 const router = Router();
 
 router.use(authenticate);
 
+router.get('/me', ctrlWrapper(getAppointmentsController));
 router.post('/:id', isValidId, ctrlWrapper(createAppointmentController));
-router.post('/:id', isValidId, ctrlWrapper(editAppointmentController));
-router.post('/:id', isValidId, ctrlWrapper(deleteAppointmentController));
+router.patch('/:id', isValidId, ctrlWrapper(editAppointmentController));
+router.delete('/:id', isValidId, ctrlWrapper(deleteAppointmentController));
 
 export default router;

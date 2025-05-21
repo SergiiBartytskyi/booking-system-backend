@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import {
+  currentUserController,
   deleteUserController,
   getUserByIdController,
   getUsersController,
@@ -14,8 +15,9 @@ const router = Router();
 
 router.use(authenticate);
 
-router.get('/', ctrlWrapper(getUsersController));
-router.get('/:id', isValidId, ctrlWrapper(getUserByIdController));
+router.get('/business', ctrlWrapper(getUsersController));
+router.get('/business/:id', isValidId, ctrlWrapper(getUserByIdController));
+router.get('/me', ctrlWrapper(currentUserController));
 router.put('/:id', isValidId, ctrlWrapper(upsertUserController));
 router.patch('/:id', isValidId, ctrlWrapper(patchUserController));
 router.delete('/:id', isValidId, ctrlWrapper(deleteUserController));

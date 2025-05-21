@@ -37,6 +37,16 @@ export const getUserByIdController = async (req, res, next) => {
   });
 };
 
+export const currentUserController = async (req, res) => {
+  const user = req.user;
+
+  res.json({
+    status: 200,
+    message: 'User successfully refreshed!',
+    data: user,
+  });
+};
+
 export const deleteUserController = async (req, res, next) => {
   const { id } = req.params;
 

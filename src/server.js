@@ -6,12 +6,12 @@ import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { env } from './utils/env.js';
 
-const port = Number(env('PORT', '3000'));
+const port = Number(env('PORT', '5000'));
 
 export const setupServer = () => {
   const app = express();
 
-  app.use(cors());
+  app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
   app.use(express.json());
   app.use(cookieParser());
 

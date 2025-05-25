@@ -31,8 +31,7 @@ export const getAppointmentByIdController = async (req, res, next) => {
 
 export const createAppointmentController = async (req, res, next) => {
   const clientId = req.user._id.toString();
-  const { id: businessId } = req.params;
-  const { dateTime, businessName } = req.body;
+  const { dateTime, businessName, businessId } = req.body;
   const status = STATUS.SCHEDULED;
 
   if (req.user.role !== ROLES.CLIENT) {

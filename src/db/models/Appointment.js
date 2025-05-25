@@ -14,6 +14,11 @@ const appointmentSchema = new Schema(
       ref: 'users',
       required: true,
     },
+    businessName: {
+      type: String,
+      ref: 'users',
+      required: true,
+    },
     dateTime: {
       type: Date,
       required: true,

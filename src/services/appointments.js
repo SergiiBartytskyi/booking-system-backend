@@ -5,6 +5,13 @@ export const getAppointments = async (userId) => {
   return appointments;
 };
 
+export const getAppointmentById = async (id) => {
+  const appointment = await AppointmentsCollection.findOne({
+    _id: id,
+  });
+  return appointment;
+};
+
 export const createAppointment = async (payload) => {
   const newAppointment = await AppointmentsCollection.create(payload);
   return newAppointment;

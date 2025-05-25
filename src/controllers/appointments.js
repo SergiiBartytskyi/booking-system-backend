@@ -14,10 +14,25 @@ export const getAppointmentsController = async (req, res) => {
   });
 };
 
+export const getAppointmentByIdController = async (req, res, next) => {
+  const { id } = req.params;
+  const appointment = await appointmentsServices.getAppointmentById(id);
+
+  if (!appointment) {
+    return next(createHttpError(404, 'Appointment not found!'));
+  }
+
+  res.json({
+    status: 200,
+    message: `Successfully found appointment with id ${id}!`,
+    data: appointment,
+  });
+};
+
 export const createAppointmentController = async (req, res, next) => {
   const clientId = req.user._id.toString();
   const { id: businessId } = req.params;
-  const { dateTime } = req.body;
+  const { dateTime, businessName } = req.body;
   const status = STATUS.SCHEDULED;
 
   if (req.user.role !== ROLES.CLIENT) {
@@ -36,6 +51,7 @@ export const createAppointmentController = async (req, res, next) => {
   const newAppointment = await appointmentsServices.createAppointment({
     clientId,
     businessId,
+    businessName,
     dateTime: date,
     status,
   });

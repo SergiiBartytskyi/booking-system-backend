@@ -62,6 +62,9 @@ export const deleteUserController = async (req, res, next) => {
     return next(createHttpError(404, 'User not found!'));
   }
 
+  res.clearCookie('sessionId');
+  res.clearCookie('refreshToken');
+
   res.status(204).send();
 };
 

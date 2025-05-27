@@ -1,7 +1,11 @@
+import { ROLES } from '../constants/index.js';
 import { AppointmentsCollection } from '../db/models/Appointment.js';
 
-export const getAppointments = async (userId) => {
-  const appointments = await AppointmentsCollection.find({ clientId: userId });
+export const getAppointments = async ({ userId, userRole }) => {
+  const appointments =
+    userRole === ROLES.CLIENT
+      ? await AppointmentsCollection.find({ clientId: userId })
+      : await AppointmentsCollection.find({ businessId: userId });
   return appointments;
 };
 

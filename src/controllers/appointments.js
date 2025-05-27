@@ -4,8 +4,12 @@ import { ROLES, STATUS } from '../constants/index.js';
 
 export const getAppointmentsController = async (req, res) => {
   const userId = req.user._id.toString();
+  const userRole = req.user.role;
 
-  const appointments = await appointmentsServices.getAppointments(userId);
+  const appointments = await appointmentsServices.getAppointments({
+    userId,
+    userRole,
+  });
 
   res.json({
     status: 200,
@@ -31,6 +35,7 @@ export const getAppointmentByIdController = async (req, res, next) => {
 
 export const createAppointmentController = async (req, res, next) => {
   const clientId = req.user._id.toString();
+  const clientName = req.user.name.toString();
   const { dateTime, businessName, businessId } = req.body;
   const status = STATUS.SCHEDULED;
 
@@ -49,6 +54,7 @@ export const createAppointmentController = async (req, res, next) => {
 
   const newAppointment = await appointmentsServices.createAppointment({
     clientId,
+    clientName,
     businessId,
     businessName,
     dateTime: date,

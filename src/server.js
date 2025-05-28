@@ -13,7 +13,10 @@ export const setupServer = () => {
 
   app.use(
     cors({
-      origin: ['http://localhost:3000'],
+      origin: [
+        'https://booking-system-frontend-sigma.vercel.app',
+        'http://localhost:3000',
+      ],
       credentials: true,
     }),
   );

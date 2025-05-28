@@ -31,10 +31,18 @@ export const updateAppointment = async (appointmentId, clientId, payload) => {
   return editAppointment;
 };
 
-export const deleteAppointment = async (appointmentId, clientId) => {
+export const deleteAppointment = async (appointmentId, businessId) => {
   const appointment = await AppointmentsCollection.findOneAndDelete({
     _id: appointmentId,
-    clientId,
+    businessId,
   });
   return appointment;
+};
+
+export const deleteAppointmentsByUserId = async ({ id, userRole }) => {
+  const appointmentsById =
+    userRole === ROLES.CLIENT
+      ? await AppointmentsCollection.deleteMany({ clientId: id })
+      : await AppointmentsCollection.deleteMany({ businessId: id });
+  return appointmentsById;
 };

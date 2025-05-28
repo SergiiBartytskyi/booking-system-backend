@@ -2,7 +2,7 @@ import { ROLES } from '../constants/index.js';
 import { UsersCollection } from '../db/models/User.js';
 
 export const getBusinessUsers = async () => {
-  const users = await UsersCollection.find({})
+  const users = await UsersCollection.find()
     .where('role')
     .equals(ROLES.BUSINESS);
   return users;

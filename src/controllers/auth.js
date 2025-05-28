@@ -43,7 +43,6 @@ export const registerUserController = async (req, res, next) => {
         email: newUser.email,
         role: newUser.role,
       },
-      accessToken: session.accessToken,
     },
   });
 };
@@ -68,7 +67,6 @@ export const loginUserController = async (req, res) => {
         email: user.email,
         role: user.role,
       },
-      accessToken: session.accessToken,
     },
   });
 };

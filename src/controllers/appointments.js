@@ -126,12 +126,13 @@ export const editAppointmentController = async (req, res, next) => {
 };
 
 export const deleteAppointmentController = async (req, res, next) => {
-  const clientId = req.user._id.toString();
+  const businessId = req.user._id.toString();
+
   const { id: appointmentId } = req.params;
 
   const deletedAppointment = await appointmentsServices.deleteAppointment(
     appointmentId,
-    clientId,
+    businessId,
   );
 
   if (!deletedAppointment) {

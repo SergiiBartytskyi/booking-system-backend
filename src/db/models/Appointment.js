@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import { ROLES, STATUS } from '../../constants/index.js';
+import { STATUS } from '../../constants/index.js';
 import { handleSaveError, setUpdateSettings } from './hooks.js';
 
 const appointmentSchema = new Schema(
@@ -32,11 +32,6 @@ const appointmentSchema = new Schema(
       type: String,
       enum: [STATUS.SCHEDULED, STATUS.CANCELLED, STATUS.COMPLETED],
       default: STATUS.SCHEDULED,
-    },
-    side: {
-      type: String,
-      enum: [ROLES.CLIENT, ROLES.BUSINESS],
-      default: ROLES.CLIENT,
     },
   },
   {

@@ -1,5 +1,6 @@
 import createHttpError from 'http-errors';
 import * as usersServices from '../services/users.js';
+import * as appointmentsServices from '../services/appointments.js';
 import { ROLES } from '../constants/index.js';
 
 export const getUsersController = async (req, res, next) => {
@@ -51,10 +52,13 @@ export const deleteUserController = async (req, res, next) => {
   const { id } = req.params;
 
   const userId = req.user._id.toString();
+  const userRole = req.user.role;
 
   if (userId !== id) {
     return next(createHttpError(403, 'Access denied'));
   }
+
+  await appointmentsServices.deleteAppointmentsByUserId({ id, userRole });
 
   const user = await usersServices.deleteUser(id);
 

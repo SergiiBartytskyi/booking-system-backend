@@ -7,11 +7,15 @@ const setupSession = (res, session) => {
   res.cookie('refreshToken', refreshToken, {
     httpOnly: true,
     expires: refreshTokenValidUntil,
+    sameSite: 'Lax',
+    secure: false,
   });
 
   res.cookie('sessionId', _id, {
     httpOnly: true,
     expires: refreshTokenValidUntil,
+    sameSite: 'Lax',
+    secure: false,
   });
 };
 

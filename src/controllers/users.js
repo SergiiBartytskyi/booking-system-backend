@@ -74,6 +74,8 @@ export const deleteUserController = async (req, res, next) => {
 
 export const upsertUserController = async (req, res, next) => {
   const { id } = req.params;
+  const userRole = req.user.role;
+  const { name } = req.body;
 
   const userId = req.user._id.toString();
 
@@ -88,6 +90,12 @@ export const upsertUserController = async (req, res, next) => {
   if (!result) {
     return next(createHttpError(404, 'User not found!'));
   }
+
+  await appointmentsServices.updateAppointmentsByUserName({
+    id,
+    name,
+    userRole,
+  });
 
   const status = result.isNew ? 201 : 200;
 

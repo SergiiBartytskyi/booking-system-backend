@@ -31,6 +31,21 @@ export const updateAppointment = async (appointmentId, clientId, payload) => {
   return editAppointment;
 };
 
+export const updateAppointmentsByUserName = async ({ id, name, userRole }) => {
+  const editAppointments =
+    userRole === ROLES.CLIENT
+      ? await AppointmentsCollection.updateMany(
+          { clientId: id },
+          { $set: { clientName: name } },
+        )
+      : await AppointmentsCollection.updateMany(
+          { businessId: id },
+          { $set: { businessName: name } },
+        );
+
+  return editAppointments;
+};
+
 export const deleteAppointment = async (appointmentId, businessId) => {
   const appointment = await AppointmentsCollection.findOneAndDelete({
     _id: appointmentId,
